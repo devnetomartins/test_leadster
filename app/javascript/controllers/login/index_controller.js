@@ -1,8 +1,14 @@
 import { Controller } from "@hotwired/stimulus"
+import LoginComponent from "../../components/login"
+import React from "react"
+import ReactDOM from "react-dom/client"
 
 export default class extends Controller {
   connect() {
-    console.log("connected with controller")
-    this.element.textContent = "Tela de login"
+    const root = ReactDOM.createRoot(document.getElementById("app"))
+
+    root.render(
+      <LoginComponent /> 
+    )
   }
 }
