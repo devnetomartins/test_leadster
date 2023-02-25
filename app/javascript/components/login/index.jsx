@@ -3,9 +3,20 @@ import { Typography, Box, Button, TextField } from '@mui/material';
 // import {
 //     Container,
 //   } from './style'
-
+import * as Auth from "../../services/internalApi/auth"
 
 const Login = () => {
+
+  const createSession = async () => {
+
+    await Auth.createSession({email: "agostinho.neto@gmail.com", password: "1234"}).then((response) => {
+      window.location.href = response.data.location
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
+
+
   return(
     <Box style={{display: "flex", justifyContent: "center", backgroundColor: "#D4D4D4", width: "100%", height: "100vh"}}>
         <Box style={{alignSelf: "center",backgroundColor: "white", width: "35vw", height: "60vh", borderRadius: "10px", boxShadow: "0px 10px 25px rgba(0, 0, 0, 0.05)"}}>
@@ -25,7 +36,7 @@ const Login = () => {
               <TextField variant='outlined' style={{ width: '92%', marginBottom: '10px' }} />
             </Box>
             <Box>
-              <Button variant="contained">Entrar</Button>
+              <Button variant="contained" onClick={createSession}>Entrar</Button>
             </Box>
           </Box>
         </Box>

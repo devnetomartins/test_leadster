@@ -3,6 +3,7 @@
   <head>
     <title>TestLeadster</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= tag :meta, name: :url_base, content: root_url %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,6 +12,8 @@
   </head>
 
   <body style="margin:0;padding:0">
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
 </html>
