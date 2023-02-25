@@ -5,4 +5,3 @@ export const createSession = async (payload) => {
 
   return client.post('/users/sign_in', payload)
 }
-

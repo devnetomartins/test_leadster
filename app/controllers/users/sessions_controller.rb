@@ -12,9 +12,9 @@ class Users::SessionsController < Devise::SessionsController
   def create
     resource = User.find_for_database_authentication(email: params[:email])
 
-    invalid_login_attempt unless resource
+    return invalid_login_attempt unless resource
 
-    if resource.valid_password?("teste1234")
+    if resource.valid_password?(params[:password])
       sign_in :user, resource
       return render json: {location: pages_home_url}, status: 200
     end
