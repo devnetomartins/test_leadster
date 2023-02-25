@@ -17,7 +17,7 @@ const Login = () => {
     onSubmit: async (values, { setFieldError }) => {
       await Auth.createSession({email: values.email, password: values.password}).then((response) => {
         window.location.href = response.data.location
-      }).catch((error) => {
+      }).catch(() => {
         setFieldError('email', 'Usuário ou senha inválidos!')
       })
     },
