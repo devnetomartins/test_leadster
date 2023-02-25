@@ -16,7 +16,7 @@ class Users::SessionsController < Devise::SessionsController
 
     if resource.valid_password?(params[:password])
       sign_in :user, resource
-      return render json: {location: pages_home_url}, status: 200
+      return render json: {location: contacts_url}, status: 200
     end
 
     invalid_login_attempt

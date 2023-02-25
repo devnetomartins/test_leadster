@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  get 'pages/home'
+  get 'contacts', action: :index, controller: 'contacts'
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }
 
-  root 'pages#home'
+  root :to => redirect('/contacts')
 end
