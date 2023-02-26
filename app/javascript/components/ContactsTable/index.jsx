@@ -17,7 +17,7 @@ import moment from 'moment';
 //     Container,
 //   } from './style'
 
-const ContactsTable = ({contacts}) => {
+const ContactsTable = ({contacts, handleNewContact}) => {
   const [searched, setSearched] = useState("")
   const [loading, setLoading] = useState(false)
 
@@ -100,7 +100,7 @@ const ContactsTable = ({contacts}) => {
           }}
         />
         <Tooltip title='Cadastrar contato' placement='top'>
-          <IconButton style={{marginLeft: 'auto', marginRight: 'auto'}}>
+          <IconButton onClick={handleNewContact} style={{marginLeft: 'auto', marginRight: 'auto'}}>
             <PersonAddIcon fontSize='large' />
           </IconButton>
         </Tooltip>
