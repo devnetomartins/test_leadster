@@ -14,7 +14,7 @@ const ListContacts = ({contacts}) => {
     <Box sx={{ flexGrow: 1 }}>
       <Header />
       <NewContact open={openNewContact} handleClose={() => {setOpenNewContact(false)}}/>
-      <Box style={{display: "flex", flexDirection: "column", alignItems: 'center', backgroundColor: "#D4D4D4", width: "100%", height: "100vh"}}>
+      <Box style={{display: "flex", flexDirection: "column", alignItems: 'center', backgroundColor: "#D4D4D4", width: "100%", position: 'absolute', height: '100%'}}>
         <Typography style={{marginTop: '1rem'}}>Olá Agostinho, abaixo você pode cadastrar seus contatos.</Typography>
         <Box style={{width: "80vw", marginTop: "3rem"}}>
           <ContactsTable contacts={contacts} handleNewContact={() => {setOpenNewContact(true)}} />

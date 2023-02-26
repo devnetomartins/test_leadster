@@ -23,7 +23,7 @@ const NewContact = ({open, handleClose}) => {
       <Box style={{...style, width: '60vw', height: '80vh', backgroundColor: 'white', overflow: 'auto'}}>
         <Typography variant='h3' style={{textAlign: 'center'}}>Cadastrar contato</Typography>
         <Divider></Divider>
-        <ContactForm />
+        <ContactForm action="create" />
       </Box>
     </Modal>
   )
