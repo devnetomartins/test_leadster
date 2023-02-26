@@ -9,24 +9,28 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import moment from 'moment';
 
 // import {
 //     Container,
 //   } from './style'
 
-const ContactsTable = () => {
+const ContactsTable = ({contacts}) => {
   const [searched, setSearched] = useState("")
   const [loading, setLoading] = useState(false)
-  function createData(
-    name,
-    email,
-    document,
-    birthday,
-    phone
-  ) {
-    return { name, email, document, birthday, phone };
-  }
+
+  const maskString = (str, pattern) => {
+    if(str == null)
+      return;
+
+    let i = 0;
+    const padded = pattern.replace(/#/g, () => {
+       return str[i++];
+    });
+    return padded;
+ };
 
   const headers = [
     'Nome Completo',
@@ -34,35 +38,39 @@ const ContactsTable = () => {
     'CPF',
     'Data de nascimento',
     'Telefone',
+    'WhatsApp',
     'Ações'
   ]
-  const rows = []
-  // const rows = [
-  //   createData('Frozen yoghurt', "test@gmail.com", '067.851.205-20', '20/10/2020', '74981364934'),
-  //   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  //   createData('Eclair', 262, 16.0, 24, 6.0),
-  //   createData('Cupcake', 305, 3.7, 67, 4.3),
-  //   createData('Gingerbread', 356, 16.0, 49, 3.9),
-  // ];
 
   const renderData = () => {
-    if(rows.length){
-      return(
-        rows.map((row) => (
-        <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-          <TableCell component="th" scope="row" align="center">
-            {row.name}
-          </TableCell>
-          <TableCell align="center">{row.email}</TableCell>
-          <TableCell align="center">{row.document}</TableCell>
-          <TableCell align="center">{row.birthday}</TableCell>
-          <TableCell align="center">{row.phone}</TableCell>
-          <TableCell align="center">
-            <IconButton>
-              <MoreVertIcon />
-            </IconButton>
-          </TableCell>
-        </TableRow>)))
+    if(contacts.length){
+
+
+      const elements = contacts.map((contact) => {
+        const parsedBirthdayDate = moment(contact.birthday_date, "YYYY-MM-DD").format("DD/MM/YYYY")
+
+        return(
+          <TableRow key={contact.email} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            <TableCell component="th" scope="row" align="center">
+              {contact.full_name}
+            </TableCell>
+            <TableCell align="center">{contact.email}</TableCell>
+            <TableCell align="center">{maskString(contact.document_number, "###.###.###-##")}</TableCell>
+            <TableCell align="center">{parsedBirthdayDate}</TableCell>
+            <TableCell align="center">{maskString(contact.phone, "(##) #####-####")}</TableCell>
+            <TableCell align="center">{'Sim'}</TableCell>
+            <TableCell align="center">
+              <IconButton>
+                <EditIcon style={{color: "#DEB887"}} />
+              </IconButton>
+              <IconButton>
+                <DeleteIcon style={{color: "red"}} />
+              </IconButton>
+            </TableCell>
+          </TableRow>)
+      })
+
+      return(elements)
     }else{
       return(
         <TableRow>
