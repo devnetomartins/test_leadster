@@ -125,7 +125,7 @@ const ContactForm = ({action, showAddressForm}) => {
                         inputFormat="DD/MM/YYYY"
                         onChange={(value) => {
                           const dateParsed = value.format("YYYY-MM-DD")
-                          console.log("data string", dateParsed)
+
                           setFieldValue('birthday_date', dateParsed);
                           }}
                         renderInput={(params) => <TextField name='birthday_date' style={{width: '97%'}} error={form.touched.birthday_date && Boolean(form.errors.birthday_date)}
@@ -138,9 +138,7 @@ const ContactForm = ({action, showAddressForm}) => {
           </Box>
           <ContactPhones values={values} style={{display: 'flex', width: '100%'}} />
           <Box style={{marginTop: 'auto', paddingTop: '10px', paddingBottom: '15px', marginBottom: '20px'}}>
-            <Button variant="contained" onClick={() => {
-              console.log(values)
-            }} type='submit'>Cadastrar</Button>
+            <Button variant="contained" type='submit'>Cadastrar</Button>
           </Box>
           <Button variant="contained" onClick={() => {
               values.address = { zipcode: ""}
