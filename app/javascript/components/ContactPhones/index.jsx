@@ -57,7 +57,7 @@ const ContactPhones = ({values}) => {
     let boxsPhone = []
     let listOfBox = []
     let count = 0
-    console.log("elements ", phoneElements.length)
+
     phoneElements.forEach((phoneElement, index) => {
       if(count < 2){
         boxsPhone.push(phoneElement)

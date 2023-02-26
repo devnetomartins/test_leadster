@@ -44,21 +44,19 @@ const ContactsTable = ({contacts, handleNewContact}) => {
 
   const renderData = () => {
     if(contacts.length){
-
-
       const elements = contacts.map((contact) => {
         const parsedBirthdayDate = moment(contact.birthday_date, "YYYY-MM-DD").format("DD/MM/YYYY")
 
         return(
-          <TableRow key={contact.email} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+          <TableRow key={contact.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
             <TableCell component="th" scope="row" align="center">
               {contact.full_name}
             </TableCell>
             <TableCell align="center">{contact.email}</TableCell>
             <TableCell align="center">{maskString(contact.document_number, "###.###.###-##")}</TableCell>
             <TableCell align="center">{parsedBirthdayDate}</TableCell>
-            <TableCell align="center">{maskString(contact.phone, "(##) #####-####")}</TableCell>
-            <TableCell align="center">{'Sim'}</TableCell>
+            <TableCell align="center">{maskString(contact.phone?.number, "(##) #####-####")}</TableCell>
+            <TableCell align="center">{contact.phone?.whatsapp ? 'Sim' : 'Não'}</TableCell>
             <TableCell align="center">
               <IconButton>
                 <EditIcon style={{color: "#DEB887"}} />
