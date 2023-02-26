@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/petlove/active_service.git
+  revision: 90c9fdb1d6aa45499a3056556ad1be7370e23c69
+  specs:
+    active_service (0.1.0)
+      awesome_print
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -73,6 +80,7 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
+    awesome_print (1.9.2)
     bcrypt (3.1.18)
     bindex (0.8.1)
     bootsnap (1.16.0)
@@ -249,6 +257,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.2)
+  active_service!
   bootsnap
   capybara
   debug
