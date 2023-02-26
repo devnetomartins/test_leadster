@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
-import { Typography, TextField, Box, Button} from '@mui/material';
+import { Typography, TextField, Box, Button, Checkbox, Tooltip} from '@mui/material';
 import { Field, ErrorMessage, FieldArray } from 'formik'
 import InputMask from 'react-input-mask';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 // import {
 //     Container,
@@ -16,27 +17,36 @@ const ContactPhones = ({values}) => {
       return(
         <Box key={index} style={{width: '50%'}}>
           <Typography style={{fontSize: "20px"}} variant='subtitle1'>Telefone</Typography>
-          <Field name={`phones.${index}.number`} style={{ width: '97%', marginBottom: '10px' }}>
-            {({field, form, meta}) => {
-              const phoneValues = form.values?.phones?.length && form.values.phones[index] || {};
-              const phoneErrors = form.errors?.phones?.length && form.errors.phones[index] || {};
-              const phoneTouched = form.touched?.phones?.length && form.touched.phones[index] || {};
+          <Box  style={{display: 'flex'}}>
+            <Field name={`phones.${index}.number`} style={{ width: '97%', marginBottom: '10px' }}>
+              {({field, form, meta}) => {
+                const phoneValues = form.values?.phones?.length && form.values.phones[index] || {};
+                const phoneErrors = form.errors?.phones?.length && form.errors.phones[index] || {};
+                const phoneTouched = form.touched?.phones?.length && form.touched.phones[index] || {};
 
-              return(
-                <InputMask
-                mask="(99) 99999-9999"
-                value={phoneValues.number || ''}
-                onChange={form.handleChange}
-                disabled={false}
-                maskChar=" "
-              >
-                {() => (<TextField name={`phones.${index}.number`}  variant='outlined' style={{ width: '97%', marginBottom: '10px' }}
-                  error={phoneTouched.number && Boolean(phoneErrors.number)}
-                  helperText={phoneTouched.number && phoneErrors.number} />)}
-              </InputMask>
-              )
-            }}
-          </Field>
+                return(
+                  <InputMask
+                  mask="(99) 99999-9999"
+                  value={phoneValues.number || ''}
+                  onChange={form.handleChange}
+                  maskChar=" "
+                >
+                  {() => (<TextField name={`phones.${index}.number`}  variant='outlined' style={{ width: '97%', marginBottom: '10px' }}
+                    error={phoneTouched.number && Boolean(phoneErrors.number)}
+                    helperText={phoneTouched.number && phoneErrors.number} />)}
+                </InputMask>
+                )
+              }}
+            </Field>
+            <Field name={`phones.${index}.whatsapp`} style={{ width: '97%', marginBottom: '10px' }}>
+              {({field, form, meta}) => {
+                const phoneValues = form.values?.phones?.length && form.values.phones[index] || {};
+
+                return(<Tooltip title='Esse número é whatsapp?' placement='top'>
+                        <Checkbox name={`phones.${index}.whatsapp`} onChange={form.handleChange} value={phoneValues.whatsapp || false}  icon={<WhatsAppIcon />} checkedIcon={<WhatsAppIcon />} /></Tooltip>)
+              }}
+            </Field>
+          </Box>
         </Box>
       )
     }))

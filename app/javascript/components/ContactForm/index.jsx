@@ -33,7 +33,7 @@ const ContactForm = ({showAddressForm}) => {
       document_number: '',
       birthday_date: '',
       email: '',
-      phones: [{number: "" }]
+      phones: [{number: "", whatsapp: false }]
     }} validationSchema={createNewContactSchema} onSubmit={() => {}}>
       {({ values, touched, errors }) => (
         <Form style={{alignItems: 'center', display: 'flex', flexDirection: 'column', height: '93%'}}>
