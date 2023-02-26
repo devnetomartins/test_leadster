@@ -1,13 +1,13 @@
 import React, {useState} from 'react'
 import { Button, TextField, Box, Typography} from '@mui/material';
-import { useFormik, Formik, Form, Field } from 'formik'
+import { Formik, Form, Field } from 'formik'
 import createNewContactSchema from "../../schemas/createContact"
 import ContactPhones from "../ContactPhones"
-import moment from 'moment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import InputMask from 'react-input-mask';
+import * as Contact from "../../services/internalApi/contact"
 // import {
 //     Container,
 //   } from './style'
@@ -24,18 +24,42 @@ const style = {
   padding: 10,
 };
 
-const ContactForm = ({showAddressForm}) => {
+const ContactForm = ({action, showAddressForm}) => {
   const [date, setDate] = useState(null)
+
+  const clearMaskPayload = (payload) => {
+    const cleanedPhones = payload.phones.map((phone) => {
+      phone.number = phone.number.replace(/\D/g, "");
+      return(phone)
+    })
+
+    payload.phones = cleanedPhones
+
+    payload.document_number = payload.document_number.replace(/\D/g, "");
+
+    return(payload)
+  }
+
+  const handleSubmit = async (values, { setFieldError }) => {
+    if(action == "create"){
+      const payload = clearMaskPayload(values)
+
+      await Contact.createContact(payload).then((response) => {
+        window.location.href = response.data.location
+      })
+    }else{
+    }
+  }
 
   return(
     <Formik initialValues={{
       full_name: '',
       document_number: '',
-      birthday_date: '',
+      birthday_date: null,
       email: '',
       phones: [{number: "", whatsapp: false }]
-    }} validationSchema={createNewContactSchema} onSubmit={() => {}}>
-      {({ values, touched, errors }) => (
+    }} validationSchema={createNewContactSchema} onSubmit={handleSubmit}>
+      {({ values, touched, errors, setFieldValue }) => (
         <Form style={{alignItems: 'center', display: 'flex', flexDirection: 'column', height: '93%'}}>
           <Box>
             <Typography>Informe abaixo os dados do contato</Typography>
@@ -97,13 +121,14 @@ const ContactForm = ({showAddressForm}) => {
                         disableFuture
                         openTo="year"
                         views={["day", "month", "year"]}
-                        value={date}
+                        value={form.values.birthday_date || ''}
                         inputFormat="DD/MM/YYYY"
-                        onChange={(newDate) => {
-                          setDate(newDate);
-                        }}
+                        onChange={(value) => {
+                          const dateParsed = value.format("YYYY-MM-DD")
+                          console.log("data string", dateParsed)
+                          setFieldValue('birthday_date', dateParsed);
+                          }}
                         renderInput={(params) => <TextField name='birthday_date' style={{width: '97%'}} error={form.touched.birthday_date && Boolean(form.errors.birthday_date)}
-                                                  onChange={form.handleChange} value={form.values.birthday_date}
                                                   helperText={form.touched.birthday_date && form.errors.birthday_date} {...params} />}
                       />)
                   }}
