@@ -48,6 +48,8 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 gem 'devise', '~> 4.9'
+gem 'will_paginate', '~> 3.3'
+gem 'active_model_serializers', '~> 0.10.2'
 gem 'dotenv-rails'
 
 group :development, :test do
