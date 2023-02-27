@@ -51,7 +51,7 @@ const ContactForm = ({action, contact}) => {
 
     payload.document_number = payload.document_number.replace(/\D/g, "");
 
-    if(payload.adddress){
+    if(payload.address){
       payload.address.zipcode = payload.address.zipcode.replace(/\D/g, "");
     }
 
