@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  get 'contacts', action: :index, controller: 'contacts'
-  post 'contacts', action: :create, controller: 'contacts'
+  resources :contacts, only: [:index, :create, :show, :update]
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }
