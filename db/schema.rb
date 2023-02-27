@@ -59,7 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_26_223703) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "addresses", "contacts"
+  add_foreign_key "addresses", "contacts", on_delete: :cascade
   add_foreign_key "contact_phones", "contacts", on_delete: :cascade
   add_foreign_key "contacts", "users"
 end
