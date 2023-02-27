@@ -6,6 +6,12 @@ export const createContact = async (payload) => {
   return client.post('/contacts', payload)
 }
 
+export const updateContact = async (id, payload) => {
+  const client = new InternalApiClient()
+
+  return client.put(`/contacts/${id}`, payload)
+}
+
 export const showContact = async (id) => {
   const client = new InternalApiClient()
 
