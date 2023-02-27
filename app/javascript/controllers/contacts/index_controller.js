@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import ListContacts from "../../components/contacts/ListContacts"
+import ListContacts from "../../components/Contact/ListContacts"
 import React from "react"
 import ReactDOM from "react-dom/client"
 

@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import LoginComponent from "../../components/login"
+import LoginComponent from "../../components/Login"
 import React from "react"
 import ReactDOM from "react-dom/client"
 
@@ -8,7 +8,7 @@ export default class extends Controller {
     const root = ReactDOM.createRoot(document.getElementById("app"))
 
     root.render(
-      <LoginComponent /> 
+      <LoginComponent />
     )
   }
 }

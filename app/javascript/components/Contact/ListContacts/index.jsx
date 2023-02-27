@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import { Typography, TextField, Box, InputAdornment, IconButton, Tooltip, Icon} from '@mui/material';
-import Header from '../../header'
+import Header from '../../Header'
 import ContactsTable from '../../ContactsTable'
-import NewContact from '../../contacts/NewContact'
-import EditContact from '../../contacts/EditContact'
+import NewContact from '../NewContact'
+import EditContact from '../EditContact'
 
 const ListContacts = ({userEmail, contacts, totalPages}) => {
   const [openNewContact, setOpenNewContact] = useState(false)
