@@ -8,7 +8,7 @@ import EditContact from '../../contacts/EditContact'
 //     Container,
 //   } from './style'
 
-const ListContacts = ({userEmail, contacts}) => {
+const ListContacts = ({userEmail, contacts, totalPages}) => {
   const [openNewContact, setOpenNewContact] = useState(false)
   const [openEditContact, setOpenEditContact] = useState(false)
   const [contactId, setContactId] = useState('')
@@ -21,7 +21,7 @@ const ListContacts = ({userEmail, contacts}) => {
       <Box style={{display: "flex", flexDirection: "column", alignItems: 'center', backgroundColor: "#D4D4D4", width: "100%", position: 'absolute', height: '100%'}}>
         <Typography style={{marginTop: '1rem'}}>{`Olá ${userEmail}, abaixo você pode cadastrar seus contatos.`}</Typography>
         <Box style={{width: "80vw", marginTop: "3rem"}}>
-          <ContactsTable contacts={contacts} setContactId={setContactId} handleEditContact={() => { setOpenEditContact(true) }} handleNewContact={() => {setOpenNewContact(true)}} />
+          <ContactsTable totalPages={totalPages} contacts={contacts} setContactId={setContactId} handleEditContact={() => { setOpenEditContact(true) }} handleNewContact={() => {setOpenNewContact(true)}} />
         </Box>
       </Box>
     </Box>
