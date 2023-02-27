@@ -24,9 +24,14 @@ const style = {
   padding: 10,
 };
 
-const ContactForm = ({action, showAddressForm}) => {
-  const [date, setDate] = useState(null)
-
+const ContactForm = ({action, contact, showAddressForm}) => {
+  var contactObject = contact || {
+    full_name: contact?.full_name || '',
+    document_number: contact?.document_number || '',
+    birthday_date: contact?.birthday_date || null,
+    email: contact?.email || '',
+    phones: contact?.phones || [{number: "", whatsapp: false }]
+  }
   const clearMaskPayload = (payload) => {
     const cleanedPhones = payload.phones.map((phone) => {
       phone.number = phone.number.replace(/\D/g, "");
@@ -48,17 +53,12 @@ const ContactForm = ({action, showAddressForm}) => {
         window.location.href = response.data.location
       })
     }else{
+
     }
   }
 
   return(
-    <Formik initialValues={{
-      full_name: '',
-      document_number: '',
-      birthday_date: null,
-      email: '',
-      phones: [{number: "", whatsapp: false }]
-    }} validationSchema={createNewContactSchema} onSubmit={handleSubmit}>
+    <Formik initialValues={contactObject} validationSchema={createNewContactSchema} onSubmit={handleSubmit}>
       {({ values, touched, errors, setFieldValue }) => (
         <Form style={{alignItems: 'center', display: 'flex', flexDirection: 'column', height: '93%'}}>
           <Box>
@@ -138,11 +138,13 @@ const ContactForm = ({action, showAddressForm}) => {
           </Box>
           <ContactPhones values={values} style={{display: 'flex', width: '100%'}} />
           <Box style={{marginTop: 'auto', paddingTop: '10px', paddingBottom: '15px', marginBottom: '20px'}}>
-            <Button variant="contained" type='submit'>Cadastrar</Button>
+            <Button variant="contained" type='submit'>
+              {action == "create" ? 'Cadastrar' : 'Atualizar'}
+            </Button>
           </Box>
-          <Button variant="contained" onClick={() => {
+          {/* <Button variant="contained" onClick={() => {
               values.address = { zipcode: ""}
-            }} type='submit'>Add address</Button>
+            }} type='submit'>Add address</Button> */}
         </Form>
       )}
     </Formik>
