@@ -1,0 +1,8 @@
+:queues:
+  - critical
+  - default
+  - low
+development:
+  :concurrency: <%= ENV.fetch('SIDEKIQ_CONCURRENCY', 10) %>
+production:
+  :concurrency: <%= ENV.fetch('SIDEKIQ_CONCURRENCY', 10) %>
