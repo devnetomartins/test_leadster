@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Contacts::UpdateContactService < ActiveService::Base
+class Contact::UpdateContactService < ActiveService::Base
   def initialize(contact_id, params)
     @contact_id = contact_id
     @params = params

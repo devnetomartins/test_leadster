@@ -12,7 +12,7 @@ class ContactsController < ApplicationController
   end
 
   def create
-    result = Contacts::CreateContactService.perform(create_contact_params, current_user)
+    result = Contact::CreateContactService.perform(create_contact_params, current_user)
 
     if result.valid?
       render json: {location: contacts_url, contact: result.contact}, status: 200
@@ -41,7 +41,7 @@ class ContactsController < ApplicationController
   end
 
   def update
-    result = Contacts::UpdateContactService.perform(params[:id], update_contact_params)
+    result = Contact::UpdateContactService.perform(params[:id], update_contact_params)
 
     if result.valid?
       render json: {location: contacts_url, contact: result.contact}, status: 200
