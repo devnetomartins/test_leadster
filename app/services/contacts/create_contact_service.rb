@@ -8,7 +8,7 @@ class Contacts::CreateContactService < ActiveService::Base
 
   def perform
     contact = create_contact!
-    send_contact_to_webhook
+    send_contact_to_webhook(contact)
     response(valid?: true, contact: contact)
   rescue StandardError => e
     message = "#{self.class}, class=#{e.class} message='#{e.message}'"
@@ -36,6 +36,7 @@ class Contacts::CreateContactService < ActiveService::Base
     contact
   end
 
-  def send_contact_to_webhook
+  def send_contact_to_webhook(contact)
+    SendContactToWebhookWorker.perform_async(contact_id: contact.id)
   end
 end
