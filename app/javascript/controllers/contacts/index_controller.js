@@ -6,12 +6,13 @@ import ReactDOM from "react-dom/client"
 export default class extends Controller {
   connect() {
     const contactsSerialized = document.getElementById("contacts").dataset.contacts
+    const userEmail = document.getElementById("user-email").dataset.userEmail
     const contacts = JSON.parse(contactsSerialized)
 
     const root = ReactDOM.createRoot(document.getElementById("app"))
 
     root.render(
-      <ListContacts contacts={contacts} />,
+      <ListContacts userEmail={userEmail} contacts={contacts} />,
     )
   }
 }
