@@ -17,3 +17,9 @@ export const deleteContact = async (id) => {
 
   return client.delete(`/contacts/${id}`)
 }
+
+export const searchContacts = async (name, page) => {
+  const client = new InternalApiClient()
+
+  return client.get(`/contacts/search/?full_name=${name}&page=${page}`)
+}
