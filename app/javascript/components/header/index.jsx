@@ -1,7 +1,14 @@
 import React from 'react'
 import { Typography, Box,Toolbar, Button, AppBar, IconButton } from '@mui/material';
-
+import * as Auth from "../../services/internalApi/auth"
 const Header = () => {
+
+  const handleLogout = () => {
+    Auth.deleteSession().then(() => {
+      const baseUrl = document.getElementsByName('url_base')[0].content
+      window.location.href = baseUrl
+    })
+  }
 
   return(
     <AppBar position="static">
@@ -9,7 +16,7 @@ const Header = () => {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Agenda de Contatos
         </Typography>
-        <Button color="inherit">Sair</Button>
+        <Button color="inherit" onClick={handleLogout}>Sair</Button>
       </Toolbar>
     </AppBar>
   )
