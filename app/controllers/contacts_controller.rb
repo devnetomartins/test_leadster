@@ -41,6 +41,13 @@ class ContactsController < ApplicationController
   end
 
   def update
+    result = Contacts::UpdateContactService.perform(params[:id], update_contact_params)
+
+    if result.valid?
+      render json: {location: contacts_url, contact: result.contact}, status: 200
+    else
+      render json: {error: result.error}, status: 422
+    end
   end
 
   def destroy
@@ -53,6 +60,10 @@ class ContactsController < ApplicationController
 
   def create_contact_params
     params.permit(:full_name, :email, :document_number, :birthday_date, phones: %i[number whatsapp])
+  end
+
+  def update_contact_params
+    params.permit(:full_name, :email, :document_number, :birthday_date, address: %i[street number neighborhood city state zipcode], phones: %i[number whatsapp])
   end
 
   def current_page
