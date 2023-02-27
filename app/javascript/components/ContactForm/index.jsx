@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { Button, TextField, Box, Typography} from '@mui/material';
 import { Formik, Form, Field } from 'formik'
 import createNewContactSchema from "../../schemas/createContact"
@@ -58,7 +58,7 @@ const ContactForm = ({action, contact}) => {
     return(payload)
   }
 
-  const handleSubmit = async (values, { setFieldError }) => {
+  const handleSubmit = async (values) => {
     const payload = clearMaskPayload(values)
 
     if(action == "create"){
@@ -74,7 +74,7 @@ const ContactForm = ({action, contact}) => {
 
   return(
     <Formik initialValues={contactObject} validationSchema={action == "create" ? createNewContactSchema : updateContactSchema } onSubmit={handleSubmit}>
-      {({ values, touched, errors, setFieldValue }) => (
+      {({ values, setFieldValue }) => (
         <Form style={{alignItems: 'center', display: 'flex', flexDirection: 'column', height: '93%'}}>
           <Box>
             <Typography>Informe abaixo os dados do contato</Typography>

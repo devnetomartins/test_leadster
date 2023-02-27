@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Box,Toolbar, Button, AppBar, IconButton } from '@mui/material';
+import { Typography, Toolbar, Button, AppBar } from '@mui/material';
 import * as Auth from "../../services/internalApi/auth"
 const Header = () => {
 

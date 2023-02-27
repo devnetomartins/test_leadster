@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { TextField, Box, InputAdornment, Tooltip, IconButton, CircularProgress, Pagination } from '@mui/material';
+import { TextField, Box, InputAdornment, Tooltip, IconButton, Pagination } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
