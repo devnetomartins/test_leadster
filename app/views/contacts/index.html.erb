@@ -1,5 +1,4 @@
 <div data-contacts="<%= @contacts_serialized %>" id="contacts"></div>
+<div data-user-email="<%= @user_email %>" id="user-email"></div>
 
 <%= content_tag(:div, "", id: "app", data: { controller: "contacts-index" }) %>
-
-<%= button_to "logout", destroy_user_session_path, method: :delete  %>
