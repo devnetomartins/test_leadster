@@ -2,7 +2,9 @@ import React, {useState} from 'react'
 import { Button, TextField, Box, Typography} from '@mui/material';
 import { Formik, Form, Field } from 'formik'
 import createNewContactSchema from "../../schemas/createContact"
+import updateContactSchema from "../../schemas/updateContact"
 import ContactPhones from "../ContactPhones"
+import AddressInputs from "../AddressInputs"
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
@@ -53,12 +55,12 @@ const ContactForm = ({action, contact, showAddressForm}) => {
         window.location.href = response.data.location
       })
     }else{
-
+      console.log("valores do form", values)
     }
   }
 
   return(
-    <Formik initialValues={contactObject} validationSchema={createNewContactSchema} onSubmit={handleSubmit}>
+    <Formik initialValues={contactObject} validationSchema={action == "create" ? createNewContactSchema : updateContactSchema } onSubmit={handleSubmit}>
       {({ values, touched, errors, setFieldValue }) => (
         <Form style={{alignItems: 'center', display: 'flex', flexDirection: 'column', height: '93%'}}>
           <Box>
@@ -137,14 +139,12 @@ const ContactForm = ({action, contact, showAddressForm}) => {
             </Box>
           </Box>
           <ContactPhones values={values} style={{display: 'flex', width: '100%'}} />
+          {action == "create" ? null : <AddressInputs setFieldValue={setFieldValue} styles={{marginTop: '20px'}} values={values} />}
           <Box style={{marginTop: 'auto', paddingTop: '10px', paddingBottom: '15px', marginBottom: '20px'}}>
             <Button variant="contained" type='submit'>
               {action == "create" ? 'Cadastrar' : 'Atualizar'}
             </Button>
           </Box>
-          {/* <Button variant="contained" onClick={() => {
-              values.address = { zipcode: ""}
-            }} type='submit'>Add address</Button> */}
         </Form>
       )}
     </Formik>

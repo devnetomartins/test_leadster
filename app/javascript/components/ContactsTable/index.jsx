@@ -82,7 +82,7 @@ const ContactsTable = ({contacts, totalPages, handleNewContact, handleEditContac
           <TableCell align="center">{maskString(contact.document_number, "###.###.###-##")}</TableCell>
           <TableCell align="center">{parsedBirthdayDate}</TableCell>
           <TableCell align="center">{maskString(contact.first_phone?.number, "(##) #####-####")}</TableCell>
-          <TableCell align="center">{contact.phone?.whatsapp ? 'Sim' : 'Não'}</TableCell>
+          <TableCell align="center">{contact.first_phone?.whatsapp ? 'Sim' : 'Não'}</TableCell>
           <TableCell align="center">
             <IconButton onClick={() => {
                 setContactId(contact.id)
