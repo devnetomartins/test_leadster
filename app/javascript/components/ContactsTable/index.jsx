@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import { TextField, Box, InputAdornment, Tooltip, IconButton, CircularProgress } from '@mui/material';
+import React, {useState, useEffect} from 'react'
+import { TextField, Box, InputAdornment, Tooltip, IconButton, CircularProgress, Pagination } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,14 +13,33 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import moment from 'moment';
 import * as Contact from "../../services/internalApi/contact"
+import { useDebounce } from 'use-debounce';
 
 // import {
 //     Container,
 //   } from './style'
 
-const ContactsTable = ({contacts, handleNewContact, handleEditContact, setContactId}) => {
+const ContactsTable = ({contacts, totalPages, handleNewContact, handleEditContact, setContactId}) => {
   const [searched, setSearched] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [page, setPage] = useState(1)
+  const [listContacts, setListContacts] = useState(contacts)
+  const [totalOfPages, setTotalOfPages] = useState(parseInt(totalPages))
+  const DEBOUNCE_TIME = 1000;
+  const debouncedSearch = useDebounce(searched, DEBOUNCE_TIME);
+
+  useEffect(() => {
+    Contact.searchContacts(debouncedSearch[0], page).then((response) => {
+      setTotalOfPages(response.data.total_pages)
+      setListContacts(response.data.results)
+    })
+  }, [debouncedSearch[0]]);
+
+  const handlePage = (currentPage) => {
+    Contact.searchContacts(searched, currentPage).then((response) => {
+      setListContacts(response.data.results)
+      setPage(currentPage)
+    })
+  }
 
   const handleDeleteContact = (id) => {
     Contact.deleteContact(id).then((response) => {
@@ -50,32 +69,32 @@ const ContactsTable = ({contacts, handleNewContact, handleEditContact, setContac
   ]
 
   const renderData = () => {
-    if(contacts.length){
-      const elements = contacts.map((contact) => {
-        const parsedBirthdayDate = moment(contact.birthday_date, "YYYY-MM-DD").format("DD/MM/YYYY")
+    if(listContacts.length){
+      const elements = listContacts.map((contact) => {
+      const parsedBirthdayDate = moment(contact.birthday_date, "YYYY-MM-DD").format("DD/MM/YYYY")
 
-        return(
-          <TableRow key={contact.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-            <TableCell component="th" scope="row" align="center">
-              {contact.full_name}
-            </TableCell>
-            <TableCell align="center">{contact.email}</TableCell>
-            <TableCell align="center">{maskString(contact.document_number, "###.###.###-##")}</TableCell>
-            <TableCell align="center">{parsedBirthdayDate}</TableCell>
-            <TableCell align="center">{maskString(contact.first_phone?.number, "(##) #####-####")}</TableCell>
-            <TableCell align="center">{contact.phone?.whatsapp ? 'Sim' : 'Não'}</TableCell>
-            <TableCell align="center">
-              <IconButton onClick={() => {
-                  setContactId(contact.id)
-                  handleEditContact()
-                }}>
-                <EditIcon style={{color: "#DEB887"}} />
-              </IconButton>
-              <IconButton onClick={() => handleDeleteContact(contact.id)}>
-                <DeleteIcon style={{color: "red"}} />
-              </IconButton>
-            </TableCell>
-          </TableRow>)
+      return(
+        <TableRow key={contact.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+          <TableCell component="th" scope="row" align="center">
+            {contact.full_name}
+          </TableCell>
+          <TableCell align="center">{contact.email}</TableCell>
+          <TableCell align="center">{maskString(contact.document_number, "###.###.###-##")}</TableCell>
+          <TableCell align="center">{parsedBirthdayDate}</TableCell>
+          <TableCell align="center">{maskString(contact.first_phone?.number, "(##) #####-####")}</TableCell>
+          <TableCell align="center">{contact.phone?.whatsapp ? 'Sim' : 'Não'}</TableCell>
+          <TableCell align="center">
+            <IconButton onClick={() => {
+                setContactId(contact.id)
+                handleEditContact()
+              }}>
+              <EditIcon style={{color: "#DEB887"}} />
+            </IconButton>
+            <IconButton onClick={() => handleDeleteContact(contact.id)}>
+              <DeleteIcon style={{color: "red"}} />
+            </IconButton>
+          </TableCell>
+        </TableRow>)
       })
 
       return(elements)
@@ -97,7 +116,7 @@ const ContactsTable = ({contacts, handleNewContact, handleEditContact, setContac
           id='plate-search'
           label='Informe o nome'
           value={searched}
-          onChange={() => {}}
+          onChange={(event) => {setSearched(event.target.value)}}
           style={{width: "90%"}}
           InputProps={{
             endAdornment: (
@@ -122,13 +141,10 @@ const ContactsTable = ({contacts, handleNewContact, handleEditContact, setContac
           </TableRow>
         </TableHead>
         <TableBody>
-          { loading ?
-            <TableCell colSpan={6} sx={{ textAlign: 'center' }}>
-              <CircularProgress />
-            </TableCell>
-              : renderData()}
+          { renderData() }
         </TableBody>
       </Table>
+      <Pagination count={totalOfPages} page={page} onChange={(event, value) =>{ handlePage(value) }} />
     </TableContainer>
   )
 }
