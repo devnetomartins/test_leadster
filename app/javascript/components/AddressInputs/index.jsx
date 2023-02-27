@@ -1,7 +1,10 @@
-import React, {useState, useEffect} from 'react'
-import { Typography, TextField, Box, Divider, IconButton, Tooltip, Icon} from '@mui/material';
+import React, {useEffect} from 'react'
+import { Typography, TextField, Box, Divider, Select, MenuItem} from '@mui/material';
 import { Field } from 'formik'
 import InputMask from 'react-input-mask';
+import { FormHelperText } from '@mui/material';
+import states from '../../utils/states';
+import * as FetchAddress from '../../services/viaCep/fetchAddress'
 // import {
 //     Container,
 //   } from './style'
@@ -19,15 +22,23 @@ const AddressInputs = ({values, setFieldValue, styles}) => {
   }, []);
 
   useEffect(() => {
-    const cleanedZipcode = values.address.zipcode.replace(/\D/g, "");
-    44700000
-    if(cleanedZipcode.length == 8){
-      console.log("zipcode pronto para viacep", cleanedZipcode)
-      setFieldValue('address.number', "12")
-      console.log
-      values.zipcode = "1111111"
-      //bate na viacep e traz endereço para ser preenchido
+    const fetchAddress = async () => {
+      const cleanedZipcode = values.address.zipcode.replace(/\D/g, "");
+
+      if(cleanedZipcode.length == 8){
+        console.log("zipcode pronto para viacep", cleanedZipcode)
+
+        await FetchAddress.searchAddressByZipcode(cleanedZipcode).then((response) => {
+          setFieldValue('address.street', response.data.logradouro)
+          setFieldValue('address.neighborhood', response.data.bairro)
+          setFieldValue('address.city', response.data.localidade)
+          setFieldValue('address.state', response.data.uf)
+        })
+      }
     }
+
+    fetchAddress()
+
   }, [values.address?.zipcode]);
 
   return(
@@ -79,10 +90,22 @@ const AddressInputs = ({values, setFieldValue, styles}) => {
           <Field name="address.state">
             {({field, form, meta}) => {
               return(
-              <TextField name='address.state' variant='outlined' style={{ width: '97%', marginBottom: '10px' }}
-                error={form.touched.address?.state && Boolean(form.errors.address?.state)}
-                onChange={form.handleChange} value={form.values.address?.state || ''}
-                helperText={form.touched.address?.state && form.errors.address?.state} />)
+                <>
+                  <Select
+                    name="address.state"
+                    value={form.values.address?.state || ''}
+                    label="Age"
+                    style={{ width: '97%' }}
+                    error={form.touched.address?.state && Boolean(form.errors.address?.state)}
+                    MenuProps={{style: {maxHeight: 200}}}
+                    onChange={form.handleChange}>
+                      { states.map((state, index) => {
+                        return(<MenuItem key={`state_${index}`} value={state.nameShort}>{state.name}</MenuItem>)
+                      }) }
+                  </Select>
+                  <FormHelperText style={{marginLeft: '14px', color: 'red'}}>{form.touched.address?.state && form.errors.address?.state}</FormHelperText>
+                </>
+              )
             }}
           </Field>
         </Box>
