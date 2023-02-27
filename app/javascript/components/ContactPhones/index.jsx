@@ -9,7 +9,10 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 //   } from './style'
 
 const ContactPhones = ({values}) => {
-  const [phones, setPhones] = useState([''])
+  const phoneNumbers = values.phones.map((phone) => {
+    return(phone.number)
+  })
+  const [phones, setPhones] = useState(phoneNumbers)
   const [phoneElements, setPhoneElements] = useState([])
 
   const buildPhoneElements = () => {
@@ -43,7 +46,7 @@ const ContactPhones = ({values}) => {
                 const phoneValues = form.values?.phones?.length && form.values.phones[index] || {};
 
                 return(<Tooltip title='Esse número é whatsapp?' placement='top'>
-                        <Checkbox name={`phones.${index}.whatsapp`} onChange={form.handleChange} value={phoneValues.whatsapp || false}  icon={<WhatsAppIcon />} checkedIcon={<WhatsAppIcon />} /></Tooltip>)
+                        <Checkbox name={`phones.${index}.whatsapp`} onChange={form.handleChange} value={phoneValues.whatsapp || false} checked={phoneValues.whatsapp} icon={<WhatsAppIcon />} checkedIcon={<WhatsAppIcon />} /></Tooltip>)
               }}
             </Field>
           </Box>
@@ -88,17 +91,18 @@ const ContactPhones = ({values}) => {
           <Box>
             <Button onClick={() => {
               arrayHelpers.push({
-                number: ""
+                number: "",
+                whatsapp: false
               })
               setPhones(phones.concat(['']))
             }} variant="contained">Adicionar outro telefone</Button>
             <Button style={{marginLeft: "10px", display: phones.length > 1 ? 'inline' : 'none' }} onClick={() => {
               const phoneSize = phones.length
               if(phoneSize >= 2){
-                const latIndex = phones.length - 1
+                const lastIndex = phones.length - 1
 
-                setPhones(phones.splice(0, latIndex))
-                arrayHelpers.remove(latIndex)
+                setPhones(phones.splice(0, lastIndex))
+                values.phones = values.phones.splice(0, lastIndex)
               }
             }} variant="contained">Remover telefone</Button>
           </Box>
