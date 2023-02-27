@@ -26,7 +26,7 @@ const style = {
   padding: 10,
 };
 
-const ContactForm = ({action, contact, showAddressForm}) => {
+const ContactForm = ({action, contact}) => {
   var contactObject = contact || {
     full_name: contact?.full_name || '',
     document_number: contact?.document_number || '',
@@ -44,18 +44,24 @@ const ContactForm = ({action, contact, showAddressForm}) => {
 
     payload.document_number = payload.document_number.replace(/\D/g, "");
 
+    if(payload.adddress){
+      payload.address.zipcode = payload.address.zipcode.replace(/\D/g, "");
+    }
+
     return(payload)
   }
 
   const handleSubmit = async (values, { setFieldError }) => {
-    if(action == "create"){
-      const payload = clearMaskPayload(values)
+    const payload = clearMaskPayload(values)
 
+    if(action == "create"){
       await Contact.createContact(payload).then((response) => {
         window.location.href = response.data.location
       })
     }else{
-      console.log("valores do form", values)
+      await Contact.updateContact(contact.id, payload).then((response) => {
+        window.location.href = response.data.location
+      })
     }
   }
 
