@@ -9,7 +9,7 @@ class Contact::UpdateContactService < ActiveService::Base
   def perform
     result_contact = update_contact!
 
-    response(valid?: true, contact: result_contact)
+    response(valid?: true, contact: result_contact.reload)
   rescue StandardError => e
     message = "#{self.class}, class=#{e.class} message='#{e.message}'"
     Rails.logger.error(message)

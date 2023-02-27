@@ -9,6 +9,7 @@ class Contact::CreateContactService < ActiveService::Base
   def perform
     contact = create_contact!
     send_contact_to_webhook(contact)
+
     response(valid?: true, contact: contact)
   rescue StandardError => e
     message = "#{self.class}, class=#{e.class} message='#{e.message}'"
