@@ -4,10 +4,6 @@ import { Field, ErrorMessage, FieldArray } from 'formik'
 import InputMask from 'react-input-mask';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
-// import {
-//     Container,
-//   } from './style'
-
 const ContactPhones = ({values}) => {
   const phoneNumbers = values.phones.map((phone) => {
     return(phone.number)

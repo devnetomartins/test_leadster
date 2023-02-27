@@ -4,9 +4,6 @@ import Header from '../../header'
 import ContactsTable from '../../ContactsTable'
 import NewContact from '../../contacts/NewContact'
 import EditContact from '../../contacts/EditContact'
-// import {
-//     Container,
-//   } from './style'
 
 const ListContacts = ({userEmail, contacts, totalPages}) => {
   const [openNewContact, setOpenNewContact] = useState(false)

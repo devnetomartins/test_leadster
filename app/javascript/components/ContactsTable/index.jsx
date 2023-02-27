@@ -15,10 +15,6 @@ import moment from 'moment';
 import * as Contact from "../../services/internalApi/contact"
 import { useDebounce } from 'use-debounce';
 
-// import {
-//     Container,
-//   } from './style'
-
 const ContactsTable = ({contacts, totalPages, handleNewContact, handleEditContact, setContactId}) => {
   const [searched, setSearched] = useState("")
   const [page, setPage] = useState(1)

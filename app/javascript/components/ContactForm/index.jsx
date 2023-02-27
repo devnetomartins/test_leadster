@@ -10,9 +10,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import InputMask from 'react-input-mask';
 import * as Contact from "../../services/internalApi/contact"
-// import {
-//     Container,
-//   } from './style'
 
 const style = {
   position: 'absolute',
@@ -33,6 +30,16 @@ const ContactForm = ({action, contact}) => {
     birthday_date: contact?.birthday_date || null,
     email: contact?.email || '',
     phones: contact?.phones || [{number: "", whatsapp: false }]
+  }
+  if(action == "update"){
+    contactObject.address = {
+      street: contact?.address?.street || '',
+      number: contact?.address?.number || '',
+      neighborhood: contact?.address?.neighborhood || '',
+      city: contact?.address?.city || '',
+      state: contact?.address?.state || '',
+      zipcode: contact?.address?.zipcode || ''
+    }
   }
   const clearMaskPayload = (payload) => {
     const cleanedPhones = payload.phones.map((phone) => {

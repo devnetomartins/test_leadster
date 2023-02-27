@@ -1,45 +1,26 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import { Typography, TextField, Box, Divider, Select, MenuItem} from '@mui/material';
 import { Field } from 'formik'
 import InputMask from 'react-input-mask';
 import { FormHelperText } from '@mui/material';
 import states from '../../utils/states';
 import * as FetchAddress from '../../services/viaCep/fetchAddress'
-// import {
-//     Container,
-//   } from './style'
 
 const AddressInputs = ({values, setFieldValue, styles}) => {
-  useEffect(() => {
-    values.address = {
-      street: '',
-      number: '',
-      neighborhood: '',
-      city: '',
-      state: '',
-      zipcode: ''
+  const fetchAddress = async () => {
+    const cleanedZipcode = values.address.zipcode.replace(/\D/g, "");
+
+    if(cleanedZipcode.length == 8){
+      console.log("zipcode pronto para viacep", cleanedZipcode)
+
+      await FetchAddress.searchAddressByZipcode(cleanedZipcode).then((response) => {
+        setFieldValue('address.street', response.data.logradouro)
+        setFieldValue('address.neighborhood', response.data.bairro)
+        setFieldValue('address.city', response.data.localidade)
+        setFieldValue('address.state', response.data.uf)
+      })
     }
-  }, []);
-
-  useEffect(() => {
-    const fetchAddress = async () => {
-      const cleanedZipcode = values.address.zipcode.replace(/\D/g, "");
-
-      if(cleanedZipcode.length == 8){
-        console.log("zipcode pronto para viacep", cleanedZipcode)
-
-        await FetchAddress.searchAddressByZipcode(cleanedZipcode).then((response) => {
-          setFieldValue('address.street', response.data.logradouro)
-          setFieldValue('address.neighborhood', response.data.bairro)
-          setFieldValue('address.city', response.data.localidade)
-          setFieldValue('address.state', response.data.uf)
-        })
-      }
-    }
-
-    fetchAddress()
-
-  }, [values.address?.zipcode]);
+  }
 
   return(
     <Box style={{width: '100%', ...styles}}>
@@ -119,7 +100,10 @@ const AddressInputs = ({values, setFieldValue, styles}) => {
                 <InputMask
                     mask="99999-999"
                     value={form.values.address?.zipcode || ''}
-                    onChange={form.handleChange}
+                    onChange={async (e,v) =>{
+                      fetchAddress()
+                      form.handleChange("address.zipcode")(e)
+                    }}
                     disabled={false}
                     maskChar=" "
                   >

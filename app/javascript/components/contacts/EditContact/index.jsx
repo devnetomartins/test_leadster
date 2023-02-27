@@ -2,9 +2,6 @@ import React, {useState, useEffect} from 'react'
 import { Modal, Divider, TextField, Box, InputAdornment, IconButton, Tooltip, Icon, Typography} from '@mui/material';
 import ContactForm from '../../ContactForm'
 import * as Contact from "../../../services/internalApi/contact"
-// import {
-//     Container,
-//   } from './style'
 
 const style = {
   position: 'absolute',
