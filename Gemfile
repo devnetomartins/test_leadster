@@ -59,6 +59,10 @@ group :development, :test do
   gem 'pry', '~> 0.14.2'
   gem 'pry-byebug', '~> 3.4'
   gem 'pry-doc', '~> 0.8.0'
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "faker"
+  gem 'shoulda-matchers', '~> 5.0'
 end
 
 group :development do
