@@ -1,0 +1,15 @@
+{
+  "full_name": "Alessandro Alves",
+  "email": "alessandro@test.com",
+  "document_number": "26785120328",
+  "birthday_date": "1990-08-10",
+  "address": {
+    "street": "Rua do Campo",
+    "number": "20",
+    "neighborhood": "Mundo Novo",
+    "city": "São Paulo",
+    "state": "SP",
+    "zipcode": "03100000"
+  },
+  "phones": [{"number": "75999999999", "whatsapp": true}]
+}

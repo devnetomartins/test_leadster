@@ -1,0 +1,7 @@
+{
+  "full_name": "Alessandro Alves",
+  "email": "alessandro@test.com",
+  "document_number": "26785120328",
+  "birthday_date": "1990-08-10",
+  "phones": [{"number": "75999999999", "whatsapp": true}]
+}
