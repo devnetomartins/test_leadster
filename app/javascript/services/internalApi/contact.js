@@ -11,3 +11,9 @@ export const showContact = async (id) => {
 
   return client.get(`/contacts/${id}`)
 }
+
+export const deleteContact = async (id) => {
+  const client = new InternalApiClient()
+
+  return client.delete(`/contacts/${id}`)
+}

@@ -12,6 +12,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import moment from 'moment';
+import * as Contact from "../../services/internalApi/contact"
 
 // import {
 //     Container,
@@ -20,6 +21,12 @@ import moment from 'moment';
 const ContactsTable = ({contacts, handleNewContact, handleEditContact, setContactId}) => {
   const [searched, setSearched] = useState("")
   const [loading, setLoading] = useState(false)
+
+  const handleDeleteContact = (id) => {
+    Contact.deleteContact(id).then((response) => {
+      window.location.href = response.data.location
+    })
+  }
 
   const maskString = (str, pattern) => {
     if(str == null)
@@ -64,7 +71,7 @@ const ContactsTable = ({contacts, handleNewContact, handleEditContact, setContac
                 }}>
                 <EditIcon style={{color: "#DEB887"}} />
               </IconButton>
-              <IconButton>
+              <IconButton onClick={() => handleDeleteContact(contact.id)}>
                 <DeleteIcon style={{color: "red"}} />
               </IconButton>
             </TableCell>

@@ -30,6 +30,12 @@ class ContactsController < ApplicationController
   def update
   end
 
+  def destroy
+    Contact.find(params[:id]).delete
+
+    render json: {message: "Deleted contact with success", location: contacts_url }, status: 200
+  end
+
   private
 
   def create_contact_params
