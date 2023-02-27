@@ -1,11 +1,14 @@
 class ContactsController < ApplicationController
   before_action :authenticate_user!
 
+  CONTACTS_PER_PAGE = 2
+
   def index
-    contacts = user_contacts.paginate(page: current_page, per_page: params[:per_page] || 20)
+    contacts = user_contacts.paginate(page: current_page, per_page: CONTACTS_PER_PAGE)
 
     @user_email = current_user.email
     @contacts_serialized = ActiveModelSerializers::SerializableResource.new(contacts, each_serializer: ContactSerializer).to_json
+    @total_pages = contacts&.total_pages || 0
   end
 
   def create
@@ -25,6 +28,16 @@ class ContactsController < ApplicationController
     contact_serialized = ActiveModelSerializers::SerializableResource.new(contact).to_json
 
     render json: contact_serialized, status: 200
+  end
+
+  def search
+    contacts_paginated = user_contacts.where("full_name LIKE '%#{params[:full_name]}%'").paginate(page: current_page, per_page: CONTACTS_PER_PAGE)
+
+    contacts_serialized = ActiveModelSerializers::SerializableResource.new(contacts_paginated, each_serializer: ContactSerializer).as_json
+
+    total_pages = contacts_paginated&.total_pages || 0
+
+    render json: {results: contacts_serialized, total_pages: total_pages}, status: 200
   end
 
   def update
