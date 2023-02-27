@@ -4,6 +4,7 @@ class ContactsController < ApplicationController
   def index
     contacts = user_contacts.paginate(page: current_page, per_page: params[:per_page] || 20)
 
+    @user_email = current_user.email
     @contacts_serialized = ActiveModelSerializers::SerializableResource.new(contacts, each_serializer: ContactSerializer).to_json
   end
 
@@ -15,6 +16,18 @@ class ContactsController < ApplicationController
     else
       render json: {error: result.error}, status: 422
     end
+  end
+
+  def show
+    contact = Contact.find(params[:id])
+    contact.build_address unless contact.address
+
+    contact_serialized = ActiveModelSerializers::SerializableResource.new(contact).to_json
+
+    render json: contact_serialized, status: 200
+  end
+
+  def update
   end
 
   private
