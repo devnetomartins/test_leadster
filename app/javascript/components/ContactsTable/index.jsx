@@ -17,7 +17,7 @@ import moment from 'moment';
 //     Container,
 //   } from './style'
 
-const ContactsTable = ({contacts, handleNewContact}) => {
+const ContactsTable = ({contacts, handleNewContact, handleEditContact, setContactId}) => {
   const [searched, setSearched] = useState("")
   const [loading, setLoading] = useState(false)
 
@@ -55,10 +55,13 @@ const ContactsTable = ({contacts, handleNewContact}) => {
             <TableCell align="center">{contact.email}</TableCell>
             <TableCell align="center">{maskString(contact.document_number, "###.###.###-##")}</TableCell>
             <TableCell align="center">{parsedBirthdayDate}</TableCell>
-            <TableCell align="center">{maskString(contact.phone?.number, "(##) #####-####")}</TableCell>
+            <TableCell align="center">{maskString(contact.first_phone?.number, "(##) #####-####")}</TableCell>
             <TableCell align="center">{contact.phone?.whatsapp ? 'Sim' : 'Não'}</TableCell>
             <TableCell align="center">
-              <IconButton>
+              <IconButton onClick={() => {
+                  setContactId(contact.id)
+                  handleEditContact()
+                }}>
                 <EditIcon style={{color: "#DEB887"}} />
               </IconButton>
               <IconButton>
