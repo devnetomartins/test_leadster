@@ -1,24 +1,52 @@
-# README
+# TestLeadster
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Agenda de contatos V1
 
-Things you may want to cover:
+## Setup
 
-* Ruby version
+* Ruby 3.0.0
+* Postgres :elephant:
+* NodeJS 16.16.0
 
-* System dependencies
+## Development
 
-* Configuration
+The project requires:
 
-* Database creation
+* Ruby 3.0.\*
+* Rails 7.0.4
+* PostgreSQL
+* React 18.2.0
+* MUI 5.11.10
 
-* Database initialization
+## Running
 
-* How to run the test suite
+```
+# Before running the commands you need to have yarn and bundler installed
 
-* Services (job queues, cache servers, search engines, etc.)
+bundle install
 
-* Deployment instructions
+yarn install
 
-* ...
+bundle exec rake db:create
+
+bundle exe rake db:migrate
+
+bundle exec rake db:seed
+```
+
+### Rails Server
+```
+bin/dev
+```
+
+### Sidekiq
+```
+bundle exec sidekiq -e development -C config/sidekiq.yml
+```
+
+### After Running
+```
+Go to localhost:3000 and use this login data:
+Email: admin@leadster.com
+Password: admin123
+```
