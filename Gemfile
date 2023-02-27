@@ -83,6 +83,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
-  gem 'vcr', '~> 6.1'
   gem 'database_cleaner'
 end
