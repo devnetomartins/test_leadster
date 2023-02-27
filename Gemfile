@@ -46,7 +46,8 @@ gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
-
+gem 'typhoeus', '~> 1.4'
+gem 'sidekiq', '~> 4.1', '>= 4.1.2'
 gem 'devise', '~> 4.9'
 gem 'will_paginate', '~> 3.3'
 gem 'active_model_serializers', '~> 0.10.2'
@@ -82,4 +83,6 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem 'vcr', '~> 6.1'
+  gem 'database_cleaner'
 end
