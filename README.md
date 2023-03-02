@@ -17,31 +17,16 @@ The project requires:
 * PostgreSQL
 * React 18.2.0
 * MUI 5.11.10
+* Docker
 
 ## Running
 
 ```
-# Before running the commands you need to have yarn and bundler installed
+docker-compose build
 
-bundle install
+docker-compose run web bundle exec rake db:create db:migrate db:seed
 
-yarn install
-
-bundle exec rake db:create
-
-bundle exe rake db:migrate
-
-bundle exec rake db:seed
-```
-
-### Rails Server
-```
-bin/dev
-```
-
-### Sidekiq
-```
-bundle exec sidekiq -e development -C config/sidekiq.yml
+docker-compose up
 ```
 
 ### After Running
