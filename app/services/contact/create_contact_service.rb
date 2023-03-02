@@ -14,7 +14,7 @@ class Contact::CreateContactService < ActiveService::Base
   rescue StandardError => e
     message = "#{self.class}, class=#{e.class} message='#{e.message}'"
     Rails.logger.error(message)
-    response(valid?: false, error: e)
+    response(errors: [e])
   end
 
   private

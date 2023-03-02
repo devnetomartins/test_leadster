@@ -17,7 +17,7 @@ class ContactsController < ApplicationController
     if result.valid?
       render json: {location: contacts_url, contact: result.contact}, status: 200
     else
-      render json: {error: result.error}, status: 422
+      render json: {error: result.errors.first}, status: 422
     end
   end
 
@@ -46,7 +46,7 @@ class ContactsController < ApplicationController
     if result.valid?
       render json: {location: contacts_url, contact: result.contact}, status: 200
     else
-      render json: {error: result.error}, status: 422
+      render json: {error: result.errors.first}, status: 422
     end
   end
 
